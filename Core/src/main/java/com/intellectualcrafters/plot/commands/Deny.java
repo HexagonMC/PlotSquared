@@ -14,7 +14,6 @@ import com.intellectualcrafters.plot.util.WorldUtil;
 import com.plotsquared.general.commands.Argument;
 import com.plotsquared.general.commands.CommandDeclaration;
 
-import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 
@@ -51,9 +50,7 @@ public class Deny extends SubCommand {
             MainUtil.sendMessage(player, C.INVALID_PLAYER, args[0]);
             return false;
         }
-        Iterator<UUID> iter = uuids.iterator();
-        while (iter.hasNext()) {
-            UUID uuid = iter.next();
+        for (UUID uuid : uuids) {
             if (uuid == DBFunc.everyone && !(Permissions.hasPermission(player, C.PERMISSION_DENY_EVERYONE) || Permissions.hasPermission(player, C.PERMISSION_ADMIN_COMMAND_DENY))) {
                 MainUtil.sendMessage(player, C.INVALID_PLAYER, MainUtil.getName(uuid));
                 continue;

@@ -100,8 +100,7 @@ public class Trim extends SubCommand {
             return false;
         }
         MainUtil.sendMessage(null, "Collecting region data...");
-        ArrayList<Plot> plots = new ArrayList<>();
-        plots.addAll(PS.get().getPlots(world));
+        ArrayList<Plot> plots = new ArrayList<>(PS.get().getPlots(world));
         if (ExpireManager.IMP != null) {
             plots.removeAll(ExpireManager.IMP.getPendingExpired());
         }

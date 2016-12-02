@@ -19,7 +19,6 @@ import com.plotsquared.general.commands.Command;
 import com.plotsquared.general.commands.CommandDeclaration;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -38,9 +37,9 @@ public class Rate extends SubCommand {
     public boolean onCommand(final PlotPlayer player, String[] args) {
         if (args.length == 1) {
             switch (args[0].toLowerCase()) {
-                case "next": {
+                case "next":
                     ArrayList<Plot> plots = new ArrayList<>(PS.get().getBasePlots());
-                    Collections.sort(plots, new Comparator<Plot>() {
+                    plots.sort(new Comparator<Plot>() {
                         @Override
                         public int compare(Plot p1, Plot p2) {
                             double v1 = 0;
@@ -72,8 +71,7 @@ public class Rate extends SubCommand {
                     }
                     MainUtil.sendMessage(player, C.FOUND_NO_PLOTS);
                     return false;
-                }
-                case "purge": {
+                case "purge":
                     final Plot plot = player.getCurrentPlot();
                     if (plot == null) {
                         return !sendMessage(player, C.NOT_IN_PLOT);
@@ -84,7 +82,6 @@ public class Rate extends SubCommand {
                     plot.clearRatings();
                     C.RATINGS_PURGED.send(player);
                     return true;
-                }
             }
         }
         final Plot plot = player.getCurrentPlot();

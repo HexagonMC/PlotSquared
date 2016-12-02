@@ -119,11 +119,6 @@ public class AugmentedUtils {
                         }
                         return false;
                     }
-
-                    @Override
-                    public boolean setBiome(int x, int y, String biome) {
-                        return super.setBiome(x, y, biome);
-                    }
                 };
             } else {
                 secondaryMask = primaryMask;

@@ -12,20 +12,18 @@ import com.intellectualcrafters.plot.object.PlotPlayer;
 import com.intellectualcrafters.plot.object.Rating;
 import com.intellectualcrafters.plot.object.RunnableVal3;
 import com.intellectualcrafters.plot.util.EconHandler;
-import com.intellectualcrafters.plot.util.expiry.ExpireManager;
 import com.intellectualcrafters.plot.util.MainUtil;
 import com.intellectualcrafters.plot.util.MathMan;
 import com.intellectualcrafters.plot.util.Permissions;
 import com.intellectualcrafters.plot.util.StringComparison;
 import com.intellectualcrafters.plot.util.StringMan;
 import com.intellectualcrafters.plot.util.UUIDHandler;
+import com.intellectualcrafters.plot.util.expiry.ExpireManager;
 import com.plotsquared.general.commands.CommandDeclaration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.UUID;
@@ -182,7 +180,7 @@ public class ListCmd extends SubCommand {
                     }
                     plots.add(plot);
                 }
-                Collections.sort(plots, new Comparator<Plot>() {
+                plots.sort(new Comparator<Plot>() {
                     @Override
                     public int compare(Plot a, Plot b) {
                         String va = (String) a.getFlags().get(Flags.DONE);
@@ -204,7 +202,7 @@ public class ListCmd extends SubCommand {
                     return false;
                 }
                 plots = new ArrayList<>(PS.get().getPlots());
-                Collections.sort(plots, new Comparator<Plot>() {
+                plots.sort(new Comparator<Plot>() {
                     @Override
                     public int compare(Plot p1, Plot p2) {
                         double v1 = 0;
@@ -342,12 +340,7 @@ public class ListCmd extends SubCommand {
     public void displayPlots(final PlotPlayer player, List<Plot> plots, int pageSize, int page, PlotArea area,
             String[] args, boolean sort) {
         // Header
-        Iterator<Plot> iterator = plots.iterator();
-        while (iterator.hasNext()) {
-            if (!iterator.next().isBasePlot()) {
-                iterator.remove();
-            }
-        }
+        plots.removeIf(plot -> !plot.isBasePlot());
         if (sort) {
             plots = PS.get().sortPlots(plots, SortType.CREATION_DATE, area);
         }

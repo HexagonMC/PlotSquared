@@ -5,6 +5,8 @@ import com.intellectualcrafters.plot.config.C;
 import com.intellectualcrafters.plot.object.chat.PlainChatManager;
 import com.intellectualcrafters.plot.util.ChatManager;
 
+import java.util.Arrays;
+
 public class PlotMessage {
     
     private Object builder;
@@ -13,7 +15,7 @@ public class PlotMessage {
         try {
             reset(ChatManager.manager);
         } catch (Throwable e) {
-            PS.debug(PS.imp().getPluginName() + " doesn't support fancy chat for " + PS.get().IMP.getServerVersion());
+            PS.debug(PS.imp().getPluginName() + " doesn't support fancy chat for " + Arrays.toString(PS.get().IMP.getServerVersion()));
             ChatManager.manager = new PlainChatManager();
         reset(ChatManager.manager);
     }

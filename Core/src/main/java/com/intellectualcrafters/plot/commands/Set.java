@@ -19,9 +19,9 @@ import com.intellectualcrafters.plot.util.block.GlobalBlockQueue;
 import com.plotsquared.general.commands.Command;
 import com.plotsquared.general.commands.CommandDeclaration;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 @CommandDeclaration(
         command = "set",
@@ -114,12 +114,7 @@ public class Set extends SubCommand {
                             current.setComponent(component, blocks);
                         }
                         MainUtil.sendMessage(player, C.GENERATING_COMPONENT);
-                        GlobalBlockQueue.IMP.addTask(new Runnable() {
-                            @Override
-                            public void run() {
-                                plot.removeRunning();
-                            }
-                        });
+                        GlobalBlockQueue.IMP.addTask(plot::removeRunning);
                         return true;
                     }
                 }
@@ -129,8 +124,7 @@ public class Set extends SubCommand {
     }
 
     public boolean noArgs(PlotPlayer player) {
-        ArrayList<String> newValues = new ArrayList<>();
-        newValues.addAll(Arrays.asList("biome", "alias", "home", "flag"));
+        List<String> newValues = Arrays.asList("biome", "alias", "home", "flag");
         Plot plot = player.getCurrentPlot();
         if (plot != null) {
             newValues.addAll(Arrays.asList(plot.getManager().getPlotComponents(plot.getArea(), plot.getId())));

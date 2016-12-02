@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -611,12 +610,7 @@ public abstract class PlotArea {
 
     public Set<Plot> getBasePlots() {
         HashSet<Plot> myPlots = new HashSet<>(getPlots());
-        Iterator<Plot> iterator = myPlots.iterator();
-        while (iterator.hasNext()) {
-            if (!iterator.next().isBasePlot()) {
-                iterator.remove();
-            }
-        }
+        myPlots.removeIf(plot -> !plot.isBasePlot());
         return myPlots;
     }
 

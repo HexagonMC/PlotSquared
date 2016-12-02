@@ -10,7 +10,9 @@ import com.intellectualcrafters.plot.config.Settings;
 import com.intellectualcrafters.plot.config.Storage;
 import com.intellectualcrafters.plot.database.DBFunc;
 import com.intellectualcrafters.plot.database.Database;
+import com.intellectualcrafters.plot.database.MySQL;
 import com.intellectualcrafters.plot.database.SQLManager;
+import com.intellectualcrafters.plot.database.SQLite;
 import com.intellectualcrafters.plot.generator.GeneratorWrapper;
 import com.intellectualcrafters.plot.generator.HybridPlotWorld;
 import com.intellectualcrafters.plot.generator.HybridUtils;
@@ -840,12 +842,7 @@ public class PS {
                 result.add(plot);
             }
         }
-        Collections.sort(overflow, new Comparator<Plot>() {
-            @Override
-            public int compare(Plot a, Plot b) {
-                return a.hashCode() - b.hashCode();
-            }
-        });
+        overflow.sort(Comparator.comparingInt(Plot::hashCode));
         result.addAll(overflow);
         return result;
     }
@@ -1000,7 +997,7 @@ public class PS {
         } else {
             list = new ArrayList<>(input);
         }
-        Collections.sort(list, new Comparator<Plot>() {
+        list.sort(new Comparator<Plot>() {
             @Override
             public int compare(Plot a, Plot b) {
                 return Long.compare(ExpireManager.IMP.getTimestamp(a.owner), ExpireManager.IMP.getTimestamp(b.owner));
@@ -1029,7 +1026,7 @@ public class PS {
             }
         } else {
             for (PlotArea area : this.plotAreas) {
-                map.put(area, new ArrayList<Plot>(0));
+                map.put(area, new ArrayList<>(0));
             }
             Collection<Plot> lastList = null;
             PlotArea lastWorld = null;
@@ -1044,7 +1041,7 @@ public class PS {
             }
         }
         List<PlotArea> areas = Arrays.asList(this.plotAreas);
-        Collections.sort(areas, new Comparator<PlotArea>() {
+        areas.sort(new Comparator<PlotArea>() {
             @Override
             public int compare(PlotArea a, PlotArea b) {
                 if (priorityArea != null && StringMan.isEqual(a.toString(), b.toString())) {
@@ -1067,8 +1064,6 @@ public class PS {
                     break;
                 case LAST_MODIFIED:
                     toReturn.addAll(sortPlotsByModified(map.get(area)));
-                    break;
-                default:
                     break;
             }
         }
@@ -1830,11 +1825,11 @@ public class PS {
             }
             Database database;
             if (Storage.MySQL.USE) {
-                database = new com.intellectualcrafters.plot.database.MySQL(Storage.MySQL.HOST, Storage.MySQL.PORT, Storage.MySQL.DATABASE,
+                database = new MySQL(Storage.MySQL.HOST, Storage.MySQL.PORT, Storage.MySQL.DATABASE,
                         Storage.MySQL.USER, Storage.MySQL.PASSWORD);
             } else if (Storage.SQLite.USE) {
                 File file = MainUtil.getFile(IMP.getDirectory(), Storage.SQLite.DB + ".db");
-                database = new com.intellectualcrafters.plot.database.SQLite(file);
+                database = new SQLite(file);
             } else {
                 PS.log(C.PREFIX + "&cNo storage type is set!");
                 this.IMP.disable();
