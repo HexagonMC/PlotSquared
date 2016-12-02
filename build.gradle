@@ -21,6 +21,9 @@ ext {
 version = "4.0.0-SNAPSHOT-${revision}"
 description = rootProject.name
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
