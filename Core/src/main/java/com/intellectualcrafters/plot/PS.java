@@ -148,9 +148,6 @@ public class PS {
                     this.jarFile = new File(this.IMP.getDirectory().getParentFile(), "PlotSquared-" + platform + ".jar");
                 }
             }
-            if (getJavaVersion() < 1.8) {
-                PS.log(C.CONSOLE_JAVA_OUTDATED.f(IMP.getPluginName()));
-            }
             TaskManager.IMP = this.IMP.getTaskManager();
             setupConfigs();
             this.translationFile =
@@ -2002,14 +1999,6 @@ public class PS {
                 this.style.set(node.getKey(), node.getValue());
             }
         }
-    }
-
-    /**
-     * Get the Java version.
-     * @return the java version
-     */
-    public double getJavaVersion() {
-        return Double.parseDouble(System.getProperty("java.specification.version"));
     }
 
     public void foreachPlotArea(RunnableVal<PlotArea> runnable) {
